@@ -1,7 +1,7 @@
 import express from 'express';
 import path from 'path';
 import methodOverride from 'method-override';
-// import taskRouter from './routes/tasks.js';
+import tasksRouter from './routes/tasks.js';
 import { fileURLToPath } from 'url';
 import mongoose from 'mongoose';
 import dotenv from 'dotenv'
@@ -33,6 +33,8 @@ mongoose.connect(uri).then(() =>{
 app.get('/', (req, res) =>{
     res.redirect('/tasks');
 });
+
+app.use('/tasks', tasksRouter);
 
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
