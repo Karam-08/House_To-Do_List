@@ -1,0 +1,32 @@
+{
+  "name": "house_to-do_list",
+  "version": "1.0.0",
+  "main": "app.js",
+  "type": "module",
+  "scripts": {
+    "dev": "nodemon app.js",
+    "start": "node app.js",
+    "lint:ejs": "ejs-lint \"views/**/*.ejs\"",
+    "lint": "npm run lint:ejs"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Karam-08/House_To-Do_List.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Karam-08/House_To-Do_List/issues"
+  },
+  "homepage": "https://github.com/Karam-08/House_To-Do_List#readme",
+  "description": "",
+  "dependencies": {
+    "dotenv": "^17.2.3",
+    "ejs": "^3.1.10",
+    "express": "^5.1.0",
+    "method-override": "^3.0.0",
+    "mongoose": "^8.19.3",
+    "morgan": "^1.10.1"
+  }
+}
