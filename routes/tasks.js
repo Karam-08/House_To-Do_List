@@ -4,7 +4,7 @@ const router = express.Router()
 
 // INDEX — list + basic search
 router.get('/', async (req, res) =>{
-    const {search = '', cohort = ''} = req.query;
+    const {search = '', assignee = '', dueDate = '', notes = ''} = req.query;
     const q = {}
     if(search){
         const re  = new RegExp(search, 'i');
@@ -13,7 +13,7 @@ router.get('/', async (req, res) =>{
             {title:re},
             {room:re},
             {priority:re},
-            {completed:re}
+            {notes:re}
         ]
         if(assignee) q.assignee = assignee
         if(dueDate) q.dueDate = dueDate
@@ -45,17 +45,24 @@ router.get('/:id', async (req, res) =>{
 
 // EDIT — form
 router.get('/:id/edit', async (req, res) =>{
-    
+    const task = await Task.findById(req.params.id).lean()
+    if(!task) return res.status(404).send("Not Found")
+    res.render('tasks/edit', {task: {...task}, id:task._id})
 })
 
 // UPDATE
 router.put('/:id', async (req, res) =>{
-    
+    const {title, room, priority, assignee, dueDate, notes, completed} = req.body;
+    const task = await Task.findByIdAndUpdate(req.params.id, {title, room, priority, assignee, dueDate, notes, completed}, {new: true})
+    if(!task) return res.status(404).send("Not Found")
+    res.redirect(`tasks/${task._id}`)
 })
 
 // DELETE
 router.delete('/:id', async (req, res) =>{
-    
+    const task = await Task.findByIdAndDelete(req.params.id)
+    if(!task) return res.status(404).send("Not Found")
+    res.redirect('/tasks')    
 })
 
 export default router
