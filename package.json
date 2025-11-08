@@ -4,7 +4,7 @@
   "main": "app.js",
   "type": "module",
   "scripts": {
-    "dev": "nodemon app.js",
+    "dev": "nodemon --ext js,ejs app.js",
     "start": "node app.js",
     "lint:ejs": "ejs-lint \"views/**/*.ejs\"",
     "lint": "npm run lint:ejs"

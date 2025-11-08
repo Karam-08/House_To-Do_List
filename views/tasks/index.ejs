@@ -8,6 +8,66 @@
 </head>
 <body>
     <%- include('../partials/header') %>
+    <main class="container">
+        <h2>Tasks</h2>
+    <!-- Filters -->
+        <form class="filters" method="get" action="/tasks">
+            <input type="text" name="search" value="<%= search || '' %>" placeholder="Search title, notes, assignee">
+            <select name="priority">
+                <option value="">All Priorities</option>
+                <option value="Low" <%= priority === 'Low' ? 'selected': '' %>>Low</option>
+                <option value="Medium" <%= priority === 'Medium' ? 'selected': '' %>>Medium</option>
+                <option value="High" <%= priority === 'High' ? 'selected': '' %>>High</option>
+            </select>
+            <select name="room">
+                <option value="">All Rooms</option>
+                <option value="Kitchen" <%= room==='Kitchen' ? 'selected' :'' %>>Kitchen</option>
+                <option value="Living Room" <%= room==='Living Room' ? 'selected' :'' %>>Living Room</option>
+                <option value="Bathroom" <%= room==='Bathroom' ? 'selected': '' %>>Bathroom</option>
+                <option value="Bedroom" <%= room==='Bedroom' ? 'selected': '' %>>Bedroom</option>
+                <option value="Garage" <%= room==='Garage' ? 'selected': '' %>>Garage</option>
+                <option value="Yard" <%= room==='Yard' ? 'selected': '' %>>Yard</option>
+                <option value="Other" <%= room==='Other' ? 'selected': '' %>>Other</option>
+            </select>
+            <button>Filter</button>
+        </form>
+    <!-- Tasks table -->
+        <table>
+            <thead>
+                <tr>
+                    <th>Title</th>
+                    <th>Room</th>
+                    <th>Priority</th>
+                    <th>Assignee</th>
+                    <th>Due Date</th>
+                    <th>Notes</th>
+                    <th>Completed</th>
+                </tr>
+            </thead>
+            <tbody>
+                <% if (tasks.length === 0) { %>
+                    <tr><td colspan="6"><em>No tasks match your search.</em></td></tr>
+                <% } %>
+                <% tasks.forEach(function(task){ %>
+                    <tr>
+                        <td><a href="/tasks/<%= task._id %>"><%= task.title %></a></td>
+                        <td><%= task.room %></td>
+                        <td><%= task.priority %></td>
+                        <td><%= task.assignee ? task.assignee : 'N/A' %></td>
+                        <td><%= task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-US') : 'N/A' %></td>
+                        <td><%= task.notes ? task.notes : 'N/A' %></td>
+                        <td><%= task.completed ? 'Yes' : 'No' %></td>
+                        <td class="actions">
+                            <a href="/tasks/<%= task._id %>/edit">Edit</a>
+                            <form method="post" action="/tasks/<%= task._id %>?_method=DELETE" onsubmit="return confirm('Delete this task?');" style="display:inline;">
+                                <button>Delete</button>
+                            </form>
+                        </td>
+                    </tr>
+                <% }) %>
+            </tbody>
+        </table>
+    </main>
     <%- include('../partials/footer') %>
 </body>
 </html>

@@ -8,6 +8,50 @@
 </head>
 <body>
     <%- include('../partials/header') %>
+    <main class="container">
+        <h2>Add Task</h2>
+        <form action="/tasks" method="post">
+            <label>Title
+                <input required name="title">
+            </label>
+            <label>Room
+                <select name="room">
+                    <option name="Kitchen">Kitchen</option>
+                    <option name="Living Room">Living Room</option>
+                    <option name="Bathroom">Bathroom</option>
+                    <option name="Bedroom">Bedroom</option>
+                    <option name="Garage">Garage</option>
+                    <option name="Yard">Yard</option>
+                    <option name="Other">Other</option>
+                </select>
+            </label>
+            <label>Priority
+                <select name="priority" required>
+                    <option name="Low">Low</option>
+                    <option name="Medium">Medium</option>
+                    <option name="High">High</option>
+                </select>
+            </label>
+            <label>Assignee (optional)
+                <input name="assignee">
+            </label>
+            <label>Due Date (optional)
+                <input 
+                    name="dueDate" 
+                    type="date" 
+                    value="<%= task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '' %>"
+                    min="<%= new Date().toISOString().split('T')[0] %>"
+                >
+            </label>
+            <label>Notes (optional)
+                <input name="notes">
+            </label>
+            <label>Completed 
+                <input name="completed" type="checkbox">
+            </label>
+            <button>Add</button>
+        </form>
+    </main>
     <%- include('../partials/footer') %>
 </body>
 </html>
