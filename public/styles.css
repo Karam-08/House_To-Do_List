@@ -82,7 +82,13 @@ a{ color:var(--accent); }
     padding:16px 0; 
     color:var(--muted); 
 }
-.completed td {
+.completed td{
     text-decoration: line-through;
     color: rgba(255, 255, 255, 0.5);
+}
+.error{
+    color: #ff3300;
+    font-size: 0.9em;
+    display: block;
+    margin-top: 4px;
 }

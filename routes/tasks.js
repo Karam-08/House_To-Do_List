@@ -33,17 +33,23 @@ router.get('/', async (req, res) =>{
 
 // NEW — show form
 router.get('/new', (req, res) =>{
-    res.render('tasks/new', {task: {}});
+    res.render('tasks/new', {task: {}, errors: {}});
 })
 
 // CREATE — handle form
 router.post('/', async (req, res) =>{
-    const {title, room, priority, assignee, dueDate, notes} = req.body;
-
-    const completed = req.body.completed === 'on' ? true : false;
-
-    await Task.create({title, room, priority, assignee, dueDate, notes, completed})
-    res.redirect('/tasks')
+    try{
+        const {title, room, priority, assignee, dueDate, notes} = req.body;
+        const completed = req.body.completed === 'on' ? true : false;
+        await Task.create({title, room, priority, assignee, dueDate, notes, completed})
+        res.redirect('/tasks')
+    }catch(err){
+        if(err.name === 'ValidationError'){
+            res.render('tasks/new', {task: req.body, errors: err.errors})
+        }else{
+            res.status(500).send('Server Error')
+        }    
+    }
 })
 
 // SHOW
@@ -58,7 +64,7 @@ router.get('/:id', async (req, res) =>{
 router.get('/:id/edit', async (req, res) =>{
     const task = await Task.findById(req.params.id).lean()
     if(!task) return res.status(404).send("Not Found")
-    res.render('tasks/edit', {task})
+    res.render('tasks/edit', {task, errors: {}})
 })
 
 // UPDATE

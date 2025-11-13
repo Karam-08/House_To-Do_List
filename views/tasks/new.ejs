@@ -13,6 +13,9 @@
         <form action="/tasks" method="post">
             <label>Title
                 <input required name="title">
+                <% if (errors && errors.title) { %>
+                    <span class="error"><%= errors.title.message %></span>
+                <% } %>
             </label>
             <label>Room
                 <select name="room">
@@ -24,6 +27,9 @@
                     <option name="Yard">Yard</option>
                     <option name="Other">Other</option>
                 </select>
+                <% if (errors && errors.title) { %>
+                    <span class="error"><%= errors.title.message %></span>
+                <% } %>
             </label>
             <label>Priority
                 <select name="priority" required>
@@ -31,6 +37,9 @@
                     <option name="Medium">Medium</option>
                     <option name="High">High</option>
                 </select>
+                <% if (errors && errors.title) { %>
+                    <span class="error"><%= errors.title.message %></span>
+                <% } %>
             </label>
             <label>Assignee (optional)
                 <input name="assignee">

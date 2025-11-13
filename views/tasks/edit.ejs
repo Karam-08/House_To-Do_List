@@ -12,7 +12,10 @@
         <h2>Edit Task</h2>
         <form method="post" action="/tasks/<%= task._id %>?_method=PUT">
             <label>Title
-                <input required name="title" value="<%= task.title %>">
+                <input required name="title" value="<%= task.title || '' %>">
+                <% if (errors && errors.title) { %>
+                    <span class="error"><%= errors.title.message %></span>
+                <% } %>
             </label>
             <label>Room
                 <select name="room" required>
@@ -24,6 +27,9 @@
                     <option value="Yard" <%= task.room === 'Yard' ? 'selected' : '' %>>Yard</option>
                     <option value="Other" <%= task.room === 'Other' ? 'selected' : '' %>>Other</option>
                 </select>
+                <% if (errors && errors.room) { %>
+                    <span class="error"><%= errors.room.message %></span>
+                <% } %>
             </label>
             <label>Priority
                 <select name="priority" required>
@@ -31,6 +37,9 @@
                     <option value="Medium" <%= task.priority === 'Medium' ? 'selected' : '' %>>Medium</option>
                     <option value="High" <%= task.priority === 'High' ? 'selected' : '' %>>High</option>
                 </select>
+                <% if (errors && errors.priority) { %>
+                    <span class="error"><%= errors.priority.message %></span>
+                <% } %>
             </label>
             <label>Assignee
                 <input name="assignee" value="<%= task.assignee %>">
@@ -44,7 +53,7 @@
                 >
             </label>
             <label>Notes
-                <input name="notes" value="<%= task.notes %>">
+                <input name="notes" value="<%= task.notes || '' %>">
             </label>
             <button>Save</button>
         </form>
