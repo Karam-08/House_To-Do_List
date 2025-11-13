@@ -12,7 +12,7 @@
         <h2>Tasks</h2>
     <!-- Filters -->
         <form class="filters" method="get" action="/tasks">
-            <input type="text" name="search" value="<%= search || '' %>" placeholder="Search title, notes, assignee">
+            <input type="text" name="search" value="<%= search || '' %>" placeholder="Search title, notes, and assignees">
             <select name="priority">
                 <option value="">All Priorities</option>
                 <option value="Low" <%= priority === 'Low' ? 'selected': '' %>>Low</option>
@@ -37,11 +37,16 @@
             </select>
             <select name="status">
                 <option value="" <%= status === '' ? 'selected' : '' %>>All</option>
-                <option value="open" <%= status === 'open' ? 'selected' : '' %>>Open</option>
+                <option value="open" <%= status === 'open' ? 'selected' : '' %>>Incomplete</option>
                 <option value="completed" <%= status === 'completed' ? 'selected' : '' %>>Completed</option>
             </select>
             <button>Filter</button>
         </form>
+        <section id="stats">
+            <p><strong><%= tasks.length %></strong> task<%= tasks.length !== 1 ? 's' : '' %> found.</p>
+            <p><strong><%= tasks.filter(t => t.completed).length %></strong> task<%= tasks.filter(t => t.completed).length !== 1 ? 's' : '' %> completed.</p>
+            <p><strong><%= tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && !t.completed).length %></strong> task<%= tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && !t.completed).length !== 1 ? 's' : '' %></new> due today/overdue.</p>
+        </section>
     <!-- Tasks table -->
         <table>
             <thead>
@@ -65,7 +70,7 @@
                         <td><%= task.room %></td>
                         <td><%= task.priority %></td>
                         <td><%= task.assignee ? task.assignee : 'N/A' %></td>
-                        <td><%= task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-US') : 'N/A' %></td>
+                        <td><%= task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : 'N/A' %></td>
                         <td><%= task.notes ? task.notes : 'N/A' %></td>
                         <td><%= task.completed ? 'Yes' : 'No' %></td>
                         <td class="actions">

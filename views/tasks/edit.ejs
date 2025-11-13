@@ -48,8 +48,8 @@
                 <input 
                     name="dueDate" 
                     type="date" 
-                    value="<%= task.dueDate ? new Date(task.dueDate).toLocaleDateString('en-US') : '' %>"
-                    min="<%= new Date().toLocaleDateString('en-US') %>"
+                    value="<%= task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : '' %>"
+                    min="<%= new Date().toISOString().split('T')[0] %>"
                 >
             </label>
             <label>Notes

@@ -12,13 +12,14 @@ router.get('/', async (req, res) =>{
             {title:re},
             {room:re},
             {priority:re},
-            {notes:re}
+            {notes:re},
+            {assignee:re}
         ]
     }
 
     if(priority) q.priority = new RegExp(`^${priority}$`, 'i');
     if(room) q.room = new RegExp(`^${room}$`, 'i');
-    if(assignee) q.assignee = new RegExp(assignee, 'i')
+    if(assignee) q.assignee = new RegExp(`^${assignee}$`, 'i')
     if(notes) q.notes = new RegExp(notes, 'i')
     if(dueDate) q.dueDate = dueDate
     if(status === 'open'){
