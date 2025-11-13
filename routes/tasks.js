@@ -4,7 +4,7 @@ const router = express.Router()
 
 // INDEX — list + basic search
 router.get('/', async (req, res) =>{
-    const {search = '', priority = '', room = '', assignee = '', dueDate = '', notes = ''} = req.query;
+    const {search = '', priority = '', room = '', assignee = '', dueDate = '', notes = '', sort = 'newest', status = ''} = req.query;
     const q = {}
     if(search){
         const re  = new RegExp(search, 'i');
@@ -21,10 +21,21 @@ router.get('/', async (req, res) =>{
     if(assignee) q.assignee = new RegExp(assignee, 'i')
     if(notes) q.notes = new RegExp(notes, 'i')
     if(dueDate) q.dueDate = dueDate
+    if(status === 'open'){
+        q.completed = false
+    }else if(status === 'completed'){
+        q.completed = true
+    }
+
+    // Object sorting logic
+    let sortObj = {createdAt: -1}; // default sort by newest
+    if(sort === 'dueAsc') sortObj = {dueDate: 1};
+    else if(sort === 'dueDesc') sortObj = {dueDate: -1};
+    else if(sort === 'priority') sortObj = {priority: 1};
 
     try{
-        const tasks = await Task.find(q).sort({createdAt: -1}).lean();
-        res.render('tasks/index', {tasks, search, priority, room, assignee, dueDate, notes});
+        const tasks = await Task.find(q).sort(sortObj).lean()
+        res.render('tasks/index', {tasks, search, priority, room, assignee, dueDate, notes, sort, status});
     }catch(err){
         console.error(err);
         res.status(500).send('Error fetching tasks');

@@ -29,6 +29,17 @@
                 <option value="Yard" <%= room==='Yard' ? 'selected': '' %>>Yard</option>
                 <option value="Other" <%= room==='Other' ? 'selected': '' %>>Other</option>
             </select>
+            <select name="sort">
+                <option value="newest" <%= sort === 'newest' ? 'selected' : '' %>>Newest</option>
+                <option value="dueAsc" <%= sort === 'dueAsc' ? 'selected' : '' %>>Due Soonest</option>
+                <option value="dueDesc" <%= sort === 'dueDesc' ? 'selected' : '' %>>Due Latest</option>
+                <option value="priority" <%= sort === 'priority' ? 'selected' : '' %>>Priority</option>
+            </select>
+            <select name="status">
+                <option value="" <%= status === '' ? 'selected' : '' %>>All</option>
+                <option value="open" <%= status === 'open' ? 'selected' : '' %>>Open</option>
+                <option value="completed" <%= status === 'completed' ? 'selected' : '' %>>Completed</option>
+            </select>
             <button>Filter</button>
         </form>
     <!-- Tasks table -->
