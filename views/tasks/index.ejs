@@ -49,7 +49,7 @@
                     <tr><td colspan="6"><em>No tasks match your search.</em></td></tr>
                 <% } %>
                 <% tasks.forEach(function(task){ %>
-                    <tr>
+                    <tr class="<%= task.completed ? 'completed' : '' %>">
                         <td><a href="/tasks/<%= task._id %>"><%= task.title %></a></td>
                         <td><%= task.room %></td>
                         <td><%= task.priority %></td>
@@ -59,7 +59,10 @@
                         <td><%= task.completed ? 'Yes' : 'No' %></td>
                         <td class="actions">
                             <a href="/tasks/<%= task._id %>/edit">Edit</a>
-                            <form method="post" action="/tasks/<%= task._id %>?_method=DELETE" onsubmit="return confirm('Delete this task?');" style="display:inline;">
+                            <form method="post" action="/tasks/<%= task._id %>/toggle" style="display: inline;">
+                                <button><%= task.completed ? 'Mark Incomplete' : 'Mark Complete' %></button>
+                            </form>
+                            <form method="post" action="/tasks/<%= task._id %>?_method=DELETE" onsubmit="return confirm('Delete this task?');" style="display: inline;">
                                 <button>Delete</button>
                             </form>
                         </td>
