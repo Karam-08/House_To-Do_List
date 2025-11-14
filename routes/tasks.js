@@ -32,7 +32,14 @@ router.get('/', async (req, res) =>{
     let sortObj = {createdAt: -1}; // default sort by newest
     if(sort === 'dueAsc') sortObj = {dueDate: 1};
     else if(sort === 'dueDesc') sortObj = {dueDate: -1};
-    else if(sort === 'priority') sortObj = {priority: 1};
+    else if(sort === 'priority'){
+        const tasks = await Task.find(q).lean();
+        tasks.sort((a, b) =>{
+            const order = {'High': 3, 'Medium': 2, 'Low': 1};
+            return (order[b.priority] || 0) - (order[a.priority] || 0);
+        })
+        return res.render('tasks/index', {tasks, search, priority, room, assignee, dueDate, notes, sort, status});
+    }
 
     try{
         const tasks = await Task.find(q).sort(sortObj).lean()

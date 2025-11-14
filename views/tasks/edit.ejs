@@ -55,6 +55,9 @@
             <label>Notes
                 <input name="notes" value="<%= task.notes || '' %>">
             </label>
+            <label>Completed
+                <input type="checkbox" name="completed" <%= task.completed ? 'checked' : '' %> >
+            </label>
             <button>Save</button>
         </form>
     </main>

@@ -16,9 +16,9 @@
             <li><strong>Priority:</strong> <%= task.priority %></li>
             <li><strong>Assignee:</strong> <%= task.assignee %></li>
             <li><strong>Due Date:</strong> <%= task.dueDate ? new Date(task.dueDate).toISOString().split('T')[0] : 'N/A' %></li>
-            <li><strong>Notes:</strong> <%= task.notes %></li>
+            <li><strong>Notes:</strong> <%= task.notes : 'N/A' %></li>
             <li><strong>Completed:</strong> <%= task.completed ? 'Yes' : 'No' %></li>
-            <li><strong>Created:</strong> <%= new Date(task.createdAt).toISOString().split('T')[0] %></li>
+            <li><strong>Created:</strong> <%= new Date(task.createdAt).toISOString().split('T')[0] : 'N/A' %></li>
         </ul>
     </main>
   <%- include('../partials/footer') %>

@@ -44,8 +44,47 @@
         </form>
         <section id="stats">
             <p><strong><%= tasks.length %></strong> task<%= tasks.length !== 1 ? 's' : '' %> found.</p>
-            <p><strong><%= tasks.filter(t => t.completed).length %></strong> task<%= tasks.filter(t => t.completed).length !== 1 ? 's' : '' %> completed.</p>
-            <p><strong><%= tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && !t.completed).length %></strong> task<%= tasks.filter(t => t.dueDate && new Date(t.dueDate) < new Date() && !t.completed).length !== 1 ? 's' : '' %></new> due today/overdue.</p>
+            <p>
+                <strong><%= tasks.filter(t => t.completed).length %></strong> 
+                task<%= tasks.filter(t => t.completed).length !== 1 ? 's' : '' %> completed.
+            </p>
+            <% 
+                const now = new Date();
+
+                function normalize(date){
+                    const d = new Date(date);
+                    d.setHours(0, 0, 0, 0); // midnight local time
+                    return d;
+                }
+
+                const today = normalize(now);
+
+                let overdue = 0;
+                let dueSoon = 0;
+
+                tasks.forEach(t =>{
+                    if (!t.dueDate) return;
+
+                    const due = normalize(t.dueDate);
+
+                    if(!t.completed && due < today){
+                        overdue++;
+                    }else{
+                        const diffDays = (due - today) / (24 * 60 * 60 * 1000);
+                        if(diffDays === 0){
+                            dueSoon++;
+                        }
+                    }
+                });
+            %>
+            <p>
+                <strong><%= dueSoon %></strong> 
+                task<%= dueSoon !== 1 ? 's' : '' %> due within 24 hours.
+            </p>
+            <p>
+                <strong><%= overdue %></strong> 
+                task<%= overdue !== 1 ? 's' : '' %> overdue.
+            </p>
         </section>
     <!-- Tasks table -->
         <table>
@@ -58,11 +97,12 @@
                     <th>Due Date</th>
                     <th>Notes</th>
                     <th>Completed</th>
+                    <th>Actions</th>
                 </tr>
             </thead>
             <tbody>
                 <% if (tasks.length === 0) { %>
-                    <tr><td colspan="6"><em>No tasks match your search.</em></td></tr>
+                    <tr><td colspan="8"><em>No tasks match your search.</em></td></tr>
                 <% } %>
                 <% tasks.forEach(function(task){ %>
                     <tr class="<%= task.completed ? 'completed' : '' %>">
