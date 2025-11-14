@@ -105,7 +105,11 @@
                     <tr><td colspan="8"><em>No tasks match your search.</em></td></tr>
                 <% } %>
                 <% tasks.forEach(function(task){ %>
-                    <tr class="<%= task.completed ? 'completed' : '' %>">
+                    <tr class="
+                        <%= task.completed ? 'completed' : '' %>
+                        <%= task.dueDate && !task.completed && normalize(task.dueDate) < today ? 'overdue' : '' %>
+                        <%= task.dueDate && !task.completed && normalize(task.dueDate).getTime() === today.getTime() ? 'due-today' : '' %>
+                    ">
                         <td><a href="/tasks/<%= task._id %>"><%= task.title %></a></td>
                         <td><%= task.room %></td>
                         <td><%= task.priority %></td>
@@ -114,7 +118,9 @@
                         <td><%= task.notes ? task.notes : 'N/A' %></td>
                         <td><%= task.completed ? 'Yes' : 'No' %></td>
                         <td class="actions">
-                            <a href="/tasks/<%= task._id %>/edit">Edit</a>
+                            <form method="get" action="/tasks/<%= task._id %>/edit" style="display: inline;">
+                                <button>Edit</button>
+                            </form>
                             <form method="post" action="/tasks/<%= task._id %>/toggle" style="display: inline;">
                                 <button><%= task.completed ? 'Mark Incomplete' : 'Mark Complete' %></button>
                             </form>

@@ -15,7 +15,7 @@ body{
 }
 .site-header{ 
     background-color: #170e34;
-    border-bottom: 1px solid rgba(255,255,255,); 
+    border-bottom: 1px solid rgba(255,255,255,0.2); 
 }
 .site-header .container{ 
     display: flex; 
@@ -51,6 +51,9 @@ table{
     margin-top: 16px; 
     background-color: #170e34;
 }
+tbody tr:hover {
+    background-color: rgba(255, 255, 255, 0.05);
+}
 th,td{ 
     text-align: left; 
     padding: 8px 10px;
@@ -77,6 +80,9 @@ input, select, textarea{
     background-color: #290f5c;
     color: white;
 }
+input:focus, select:focus, textarea:focus{ 
+    outline: 2px solid rgb(209, 159, 66); 
+}
 button{
     margin: 0 auto;
     margin-top: 8px;
@@ -88,6 +94,9 @@ button{
     background-color: rgb(209, 159, 66);
     color: #170e34;
 }
+button:hover{
+    background-color: rgb(230, 175, 80);
+}
 a{
     color: rgb(209, 159, 66);   
 }
@@ -96,10 +105,16 @@ a{
 }
 .completed td{
     text-decoration: line-through;
-    color: rgba(0, 255, 0, 0.5);
+    color: rgba(0, 200, 0, 0.5);
+}
+.overdue td{
+    background-color: rgba(255, 100, 100, 0.25); 
+}
+.due-today td{
+    background-color: rgba(240, 220, 130, 0.25);
 }
 .error{
-    color: #ff3300;
+    color: rgb(255, 0, 0);
     font-size: 0.9em;
     display: block;
     margin-top: 4px;
