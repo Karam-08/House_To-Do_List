@@ -26,14 +26,14 @@ A Node.js and Express web application for managing household tasks.
         npm install dotenv ejs express method-override mongoose
         npm install --save-dev- ejs-lint nodemon
 
-2.  Create a `.env` file:
+2.  Create an `.env` file:
 
-        MONGODB_URI=mongodb://127.0.0.1:27017/house-todo
+        MONGO_DB_URI = mongodb+srv://admin:OoPpuCZ35Ck7o0Or@web-dev.ld3npzt.mongodb.net/House_To_Do_List
         PORT=5000
 
 3.  Start the server:
 
-        npm start
+        npm run dev
 
 4.  Visit:
 
@@ -41,7 +41,7 @@ A Node.js and Express web application for managing household tasks.
 
 ## Environment Variables
 
--   `MONGODB_URI` --- MongoDB connection string
+-   `MONGO_DB_URI` --- MongoDB connection string
 -   `PORT` --- Server port
 
 ## Task Fields
